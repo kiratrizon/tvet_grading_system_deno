@@ -1,0 +1,7 @@
+import artisan from "MyArtisan";
+import { dbCloser } from "Database";
+
+await artisan.command(Deno.args);
+Deno.addSignalListener("SIGINT", dbCloser);
+
+Deno.exit(0);
