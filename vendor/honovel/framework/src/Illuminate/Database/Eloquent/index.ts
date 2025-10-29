@@ -385,7 +385,7 @@ export abstract class Model<T extends ModelAttributes = ModelAttributes> {
   }
 
   // Never use this in production code, it's for development CLI only.
-  public static async factory(connection: string): Promise<Factory> {
+  public static async factory(connection?: string): Promise<Factory> {
     if (!isset(this.use)) {
       throw new Error("This model does not support factories.");
     }
@@ -393,7 +393,7 @@ export abstract class Model<T extends ModelAttributes = ModelAttributes> {
       throw new Error("This model does not support factories.");
     }
     if (!isset(connection)) {
-      throw new Error("Connection must be specified for factory.");
+      connection = DB.getDefaultConnection();
     }
     if (!DB.hasConnection(connection)) {
       throw new Error(`Database connection "${connection}" does not exist.`);

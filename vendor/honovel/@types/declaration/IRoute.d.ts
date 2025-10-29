@@ -196,6 +196,7 @@ interface IGFlagConfig extends FlagConfig {
   domain?: string;
   as?: string;
   name?: string;
+  prefix?: string;
 }
 export interface IMFlagConfig extends FlagConfig {
   name?: string;

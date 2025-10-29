@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/assets/icon/logo.svg">
+    <link rel="stylesheet" href="/style/bootstrap.min.css">
+    <link rel="stylesheet" href="/style/login.css">
+    <link rel="stylesheet" href="/style/main.css">
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="/style/loading.css">
+    <title>Grading System TVET</title>
+</head>
+
+<body>
+    <div class="bg-container"></div>
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p class="loading-text">Please wait... Processing your request</p>
+    </div>
+    <main>
+        <div class="">
+            <div class="form-wrapper">
+                <div class="image-wrapper">
+                    <img src="/assets/images/login_bg.jpg">
+                    <div class="text">
+                        <h1>TVET</h1>
+                        <h3>Grading System</h3>
+                        <p class="text-center" style="font-weight: 300; line-height: 1.2rem; font-size: 14px;">
+                            Log in to manage student records, track progress, and ensure accurate grading.
+                            Your role matters in shaping students' futures. Let's get started!
+                        </p>
+                    </div>
+                </div>
+                <div class="form mx-auto" style="max-width: 400px;">
+                    @if(errors.any())
+                        <div class="alert alert-danger alert-dismissible fade show text-start" role="alert" style="font-size: 13px;">
+                            <strong>Warning!</strong>
+                            <ul class="mt-2 mb-0 ps-3">
+                                @each(error in errors.all())
+                                    <li>{{ error }}</li>
+                                @endeach
+                            </ul>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                    <form action="" method="post" class="p-4 rounded-3 shadow-sm">
+                        @csrf()
+
+                        <h4 class="text-center text-white mb-4 fw-semibold">Teacher Login</h4>
+
+                        <div class="mb-3">
+                            <label for="user" class="form-label text-white">Email</label>
+                            <input 
+                                type="text" 
+                                name="email" 
+                                id="user" 
+                                class="form-control {{ session().has('error_email') ? 'is-invalid' : '' }}" 
+                                value="{{ old('email', '') }}" 
+                                required
+                            >
+                            @if(session().has("error_email"))
+                                <div class="invalid-feedback">{{ session().get("error_email") }}</div>
+                            @endif
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="pass" class="form-label text-white">Password</label>
+                            <input 
+                                type="password" 
+                                name="password" 
+                                id="pass" 
+                                class="form-control {{ session().has('error_password') ? 'is-invalid' : '' }}" 
+                                value="{{ old('password', '') }}" 
+                                required
+                            >
+                            @if(session().has("error_password"))
+                                <div class="invalid-feedback">{{ session().get("error_password") }}</div>
+                            @endif
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 fw-semibold" name="login">
+                            Login
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/loading.js"></script>
+
+    <script>
+        function createBubble() {
+            const bubble = document.createElement("img");
+            bubble.classList.add("bubble");
+            bubble.src = "/assets/icon/logo.svg";
+
+            const size = Math.random() * 50 + 16;
+            bubble.style.width = `${size}px`;
+
+            bubble.style.left = `${Math.random() * 100}vw`;
+            bubble.style.opacity = Math.random() * 0.2 + 0.1;
+
+            document.querySelector(".bg-container").appendChild(bubble);
+
+            gsap.to(bubble, {
+                y: -window.innerHeight - size,
+                duration: Math.random() * 10 + 5,
+                ease: "linear",
+                onComplete: () => bubble.remove(),
+            });
+        }
+
+        setInterval(createBubble, 500);
+        gsap.to(".bg-container", {
+            keyframes: [{
+                    background: "linear-gradient(45deg, rgba(138, 43, 226, 0.8), rgba(255, 94, 98, 0.8))",
+                    duration: 2
+                },
+                {
+                    background: "linear-gradient(45deg, rgba(255, 94, 98, 0.8), rgba(138, 43, 226, 0.8))",
+                    duration: 2
+                }
+            ],
+            repeat: -1,
+            yoyo: true,
+            ease: "power1.inOut"
+        });
+    </script>
+
+</body>
+
+</html>

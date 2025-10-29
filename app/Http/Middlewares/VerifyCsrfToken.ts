@@ -8,7 +8,7 @@ export default class VerifyCsrfToken {
       const providedToken = tokenFromInput || tokenFromHeader;
 
       if (!providedToken || providedToken !== tokenFromStore) {
-        if (request.expectsJson()) {
+        if (request.expectsJson() || request.ajax()) {
           return response().json(
             {
               message: "CSRF token mismatch.",
@@ -16,7 +16,7 @@ export default class VerifyCsrfToken {
             403
           );
         } else {
-          abort(403, "CSRF token mismatch.");
+          return redirect().back();
         }
       }
     }

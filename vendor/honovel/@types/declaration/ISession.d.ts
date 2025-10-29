@@ -49,4 +49,9 @@ export declare class ISession {
    * Regenerate the CSRF token.
    */
   regenerateToken(): void;
+
+  /**
+   * Flash data to session
+   */
+  public flash(key: string, value: unknown): void;
 }
