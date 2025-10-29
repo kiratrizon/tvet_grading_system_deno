@@ -1219,6 +1219,7 @@ export async function handleAction(
             request.session.get("_token") || ""
           }">`,
         errors: new MessageBag((errors || {}) as ErrorsShape),
+        consoledeno: consoledeno,
       };
       // @ts-ignore /
       data.addGlobal(edgeGlobals);

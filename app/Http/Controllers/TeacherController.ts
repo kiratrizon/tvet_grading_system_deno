@@ -5,9 +5,14 @@ import { Hash } from "Illuminate/Support/Facades/index.ts";
 class TeacherController extends Controller {
   // GET /resource
   public index: HttpDispatch = async ({ request }) => {
-    // List all resources
-    return response().json({
-      message: "index",
+    // teacher id
+    // @ts-ignore //
+    const authTeacher = request.user();
+    // const query = StudentGrade
+    // dd(authTeacher?.toObject());
+    return view("teacher.dashboard", {
+      ...authTeacher?.toObject(),
+      title: "Teacher Dashboard",
     });
   };
 
@@ -80,6 +85,11 @@ class TeacherController extends Controller {
       }
     }
     return view("teacher.login");
+  };
+
+  public logout: HttpDispatch = async ({ Auth }) => {
+    Auth.guard("teacher").logout();
+    return redirect().route("teacher.login");
   };
 }
 

@@ -1,18 +1,13 @@
-import {
-  Model,
-} from "Illuminate/Database/Eloquent/index.ts";
+import { Model } from "Illuminate/Database/Eloquent/index.ts";
 
 export type PeriodSchema = {
   id?: number;
-  email: string;
-  password: string;
-  name: string;
+  label: string;
+  weight: number;
 };
 
 class Period extends Model<PeriodSchema> {
-  protected static override _fillable = [];
-
-  
+  protected static override _fillable = ["label", "weight"];
 }
 
 export default Period;

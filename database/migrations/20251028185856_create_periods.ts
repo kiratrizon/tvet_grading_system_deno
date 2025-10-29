@@ -8,7 +8,7 @@ export default new (class extends Migration {
       "periods",
       (table: Blueprint) => {
         table.id();
-        table.string("lable").notNullable();
+        table.string("label").notNullable();
         table.float("weight").notNullable();
         table.timestamps();
       },

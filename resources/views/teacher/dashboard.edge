@@ -1,0 +1,97 @@
+@layouts.teacher.default({
+    $title,
+    $name,
+    $image
+})
+
+    @slot('content')
+        <div class="clock-container mb-5">
+            <div id="date"></div>
+            <div id="time"></div>
+        </div>
+        <div class="mb-4">
+            <label for="schoolYearFilter" class="form-label">Filter by School Year</label>
+            <select id="schoolYearFilter" class="form-control w-25">
+                <option value="" selected disabled hidden>All</option>
+                <!-- for query -->
+            </select>
+        </div>
+        <div class="card shadow p-4">
+            <canvas id="studentsChart"></canvas>
+        </div>
+    @endslot
+
+    @slot('scripts')
+        <script src="/js/loading.js"></script>
+        <script src="/js/clock.js"></script>
+
+        <script>
+            $("#schoolYearFilter").on("change", function() {
+                const selectedYear = $(this).val();
+                window.location.href = `?school_year=${selectedYear}`;
+            });
+
+            document.addEventListener("DOMContentLoaded", function() {
+                var ctx = document.getElementById('studentsChart').getContext('2d');
+
+                var labels = [];
+                var studentCounts = [];
+
+                var uniqueCourses = [...new Set(labels.map(label => label.split(" - ")[0]))];
+
+                var courseCounts = {};
+                labels.forEach((label, index) => {
+                    var course = label.split(" - ")[0];
+                    courseCounts[course] = (courseCounts[course] || 0) + studentCounts[index];
+                });
+
+                var studentsChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: uniqueCourses,
+                        datasets: [{
+                            label: 'Total Students',
+                            data: uniqueCourses.map(course => courseCounts[course]),
+                            backgroundColor: 'rgba(45, 2, 116, 0.5)',
+                            borderColor: 'rgba(45, 2, 116, 1)',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    title: function(tooltipItem) {
+                                        let fullLabel = labels[tooltipItem[0].dataIndex];
+                                        let parts = fullLabel.split(" - ");
+                                        return `Course: ${parts[0]}\nYear: ${parts[1]}\nSem: ${parts[2]}`;
+                                    },
+                                    label: function(tooltipItem) {
+                                        return `${tooltipItem.raw} students`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Number of Students'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Course'
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+    @endslot
+
+@endlayouts.teacher.default
