@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/assets/icon/logo.svg">
@@ -13,26 +12,25 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="/fonts/css/all.min.css">
     <link rel="stylesheet" href="/style/loading.css">
-    <title>{{ $title || 'TVET Grading System' }}</title>
-</head>
+    <title>{{ $title || 'TVET Grading System' }} | {{ env("APP_NAME") }}</title>
+  </head>
 
-<body>
+  <body>
     @layouts.teacher.theme.header({$image, $name})
     @endlayouts.teacher.theme.header
     <div class="main-container">
-        @layouts.teacher.theme.sidebar()
-        @endlayouts.teacher.theme.sidebar
-        <div id="loading-overlay">
-            <div class="spinner"></div>
-            <p class="loading-text">Please wait... Processing your request</p>
+      @layouts.teacher.theme.sidebar()
+      @endlayouts.teacher.theme.sidebar
+      <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p class="loading-text">Please wait... Processing your request</p>
+      </div>
+      <main class="main">
+        <div class="main-wrapper" style="padding: 4%">
+          {{{ await $slots.content() }}}
         </div>
-        <main class="main">
-            <div class="main-wrapper" style="padding: 4%;">
-                {{{ await $slots.content() }}}
-            </div>
-        </main>
+      </main>
     </div>
     {{{ await $slots.scripts() }}}
-</body>
-
+  </body>
 </html>

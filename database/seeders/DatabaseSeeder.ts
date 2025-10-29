@@ -5,8 +5,8 @@ import Period from "App/Models/Period.ts";
 
 export default class DatabaseSeeder extends Seeder {
   public async run() {
-    // const teacherFactory = (await Teacher.factory(this.connection)).count(10);
-    // await teacherFactory.create();
+    const teacherFactory = (await Teacher.factory(this.connection)).count(10);
+    await teacherFactory.create();
 
     const periods = [
       { label: "Prelim", weight: 20 },

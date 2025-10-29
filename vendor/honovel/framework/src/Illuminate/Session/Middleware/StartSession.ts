@@ -28,7 +28,7 @@ export default class StartSession {
 
   public fallback: HttpMiddleware = async ({ request }, next) => {
     const sessionFlash = request.session.get(
-      "_flash"
+      "_flash",
     ) as SessionDataTypes["_flash"];
     if (sessionFlash && isArray(sessionFlash.old)) {
       for (const key of sessionFlash.old) {
@@ -40,7 +40,7 @@ export default class StartSession {
           request.session.forget(key);
         }
       }
-    } // then flash only if there is input
+    }
 
     return next();
   };
