@@ -8,10 +8,11 @@ Route.prefix("teacher")
       .middleware("teacher.guest")
       .name("login");
 
-    Route.middleware("auth:teacher").group(() => {
+    Route.middleware("teacher.auth").group(() => {
       Route.get("/dashboard", [TeacherController, "index"]).name("dashboard");
       Route.get("/logout", [TeacherController, "logout"]).name("logout");
       Route.get("/settings", [TeacherController, "settings"]).name("settings");
       Route.get("/programs", [TeacherController, "programs"]).name("programs");
     });
+
   });

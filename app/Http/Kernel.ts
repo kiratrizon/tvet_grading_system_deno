@@ -26,6 +26,7 @@ import {
 import RedirectIfAuthenticated from "./Middlewares/RedirectIfAuthenticated.ts";
 import EncryptCookies from "./Middlewares/EncryptCookies.ts";
 import TeacherGuest from "./Middlewares/TeacherGuest.ts";
+import TeacherAuth from "./Middlewares/TeacherAuth.ts";
 
 class Kernel extends HttpKernel {
   protected override middleware = [
@@ -66,6 +67,7 @@ class Kernel extends HttpKernel {
     throttle: ThrottleRequests,
     verified: EnsureEmailIsVerified,
     "teacher.guest": TeacherGuest,
+    "teacher.auth": TeacherAuth
   };
 }
 
